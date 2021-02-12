@@ -1,0 +1,19 @@
+.expandable {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
+}
+
+.ajouterVote-conatainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ajouterVote-conatainer textarea {
+  margin: 0 !important;
+}

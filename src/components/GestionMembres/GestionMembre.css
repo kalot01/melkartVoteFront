@@ -1,0 +1,16 @@
+.bg-chedli {
+  /* background-image: url('../../assets/khalil.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gestion-bg {
+  padding: 20px 50px;
+  background-color: rgba(248, 249, 250, 0.5);
+  font-weight: 700;
+  box-shadow: 0 0 6px #000;
+}

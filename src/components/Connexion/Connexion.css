@@ -1,0 +1,7 @@
+.right img{
+    display: table-cell;
+
+}
+.right{
+    display: table;
+}
