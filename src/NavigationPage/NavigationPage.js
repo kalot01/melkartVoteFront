@@ -25,17 +25,7 @@ const NavigationPage = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Link
-              to="/dashboard"
-              className="nav-link"
-              role="button"
-              onClick={() => {
-                setTimeout(() => {
-                  history.push("/dashboard");
-                }, 300);
-                window.location.reload();
-              }}
-            >
+            <Link to="../" className="nav-link" role="button">
               Home
             </Link>
             {window.sessionStorage.getItem("role") == "b" ? (
