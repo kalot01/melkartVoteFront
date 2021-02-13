@@ -5,7 +5,7 @@ import "./GestionMembre.css";
 export default function GestionMembres() {
   const [members, setMembers] = useState([]);
   useEffect(() => {
-    var int = setInterval(() => {
+    var inte = setInterval(() => {
       axiosInstance
         .get("/votes/members", {
           headers: {
@@ -16,6 +16,7 @@ export default function GestionMembres() {
           setMembers(resp.data);
         });
     }, 5000);
+    return () => { clearInterval(inte)}
   }, []);
   function rendreVotant(id) {
     axiosInstance

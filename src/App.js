@@ -8,7 +8,7 @@ import GestionVotes from "./components/GestionVotes/GestionVotes";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import axios from "axios";
 export let axiosInstance = axios.create({
-  baseURL: "http://127.0.0.1:7967/api",
+  baseURL: "http://51.210.42.254:7967/api",
   Headers: {
     "Content-Type": "application/json",
   },

@@ -18,7 +18,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     if (window.sessionStorage.getItem("votant") == 1) {
-      var int = setInterval(() => {
+      var inter = setInterval(() => {
         axiosInstance
           .get("/votes/questions", {
             headers: {
@@ -28,7 +28,8 @@ const Dashboard = () => {
           .then((resp) => {
             setVotes(resp.data);
           });
-      }, 3000);
+      }, 1000);
+      return () => { clearInterval(inter)}
     } else {
       var inte = setInterval(() => {
         axiosInstance
@@ -43,6 +44,7 @@ const Dashboard = () => {
               clearInterval(inte);
             }
           });
+          return () => { clearInterval(inte)}
       }, 3000);
     }
   }, []);
