@@ -30,6 +30,9 @@ const NavigationPage = () => {
               className="nav-link"
               role="button"
               onClick={() => {
+                setTimeout(() => {
+                  history.push("/dashboard");
+                }, 300);
                 window.location.reload();
               }}
             >
