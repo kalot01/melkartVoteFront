@@ -9,7 +9,10 @@ import Vote from "../components/Vote/Vote";
 import { useHistory } from "react-router-dom";
 import GestionMembres from "../components/GestionMembres/GestionMembres";
 import GestionVotes from "../components/GestionVotes/GestionVotes";
+import { useSelector } from "react-redux";
+import { selectRole } from "../redux/slices/userSlice";
 const NavigationPage = () => {
+  const role = useSelector(selectRole);
   const history = useHistory();
   const callable = () => {
     history.push("/dashboard");
@@ -28,14 +31,14 @@ const NavigationPage = () => {
             <Link to="../" className="nav-link" role="button">
               Home
             </Link>
-            {window.sessionStorage.getItem("role") == "b" ? (
+            {role == "b" ? (
               <Link to="/dashboard/members" className="nav-link" role="button">
                 Accepter les Membres
               </Link>
             ) : (
               <></>
             )}
-            {window.sessionStorage.getItem("role") == "b" ? (
+            {role == "b" ? (
               <Link to="/dashboard/votes" className="nav-link" role="button">
                 Gestion des votes
               </Link>
@@ -55,13 +58,7 @@ const NavigationPage = () => {
           Logout
         </Button>
       </Navbar>
-      <div
-        className={
-          window.sessionStorage.getItem("role") == "b"
-            ? "main-root bg-chedli"
-            : "main-root"
-        }
-      >
+      <div className={role == "b" ? "main-root bg-chedli" : "main-root"}>
         {history.location.pathname == "/dashboard" ? (
           <Dashboard />
         ) : history.location.pathname == "/dashboard/votes" ? (

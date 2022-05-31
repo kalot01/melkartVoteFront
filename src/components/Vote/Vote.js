@@ -4,14 +4,23 @@ import Candidat from "../Candidat/Candidat";
 import { axiosInstance } from "../../App";
 import Dashboard from "../Dashboard/Dashboard";
 import Resultat from "../Resultat/Resultat";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectRole,
+  selectVoteCourant,
+  setVoteCourant,
+} from "../../redux/slices/userSlice";
 
 const Vote = ({ id, finished }) => {
+  const dispatch = useDispatch();
   const [candidats, setCandidats] = useState([]);
   const [vota, setVota] = useState(1);
   const [returne, setReturne] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const votecourant = useSelector(selectVoteCourant);
+  const role = useSelector(selectRole);
   useEffect(() => {
-    window.sessionStorage.setItem("votecourant", 0);
+    dispatch(setVoteCourant(0));
     axiosInstance
       .get("/votes/reponses", {
         params: { id: id },
@@ -39,14 +48,14 @@ const Vote = ({ id, finished }) => {
     setTimeout(() => {
       setClicked(false);
     }, 500);
-    if (window.sessionStorage.getItem("votecourant") != 0) {
+    if (votecourant != 0) {
       axiosInstance
         .post(
           "/votes/voter",
           {
             idquestion: id,
-            idreponse: window.sessionStorage.getItem("votecourant"),
-            compt: window.sessionStorage.getItem("role") == "m" ? 1 : 2,
+            idreponse: votecourant,
+            compt: role == "m" ? 1 : 2, //redux
           },
           {
             headers: {

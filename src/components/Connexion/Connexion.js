@@ -5,10 +5,13 @@ import melkart from "../../assets/melkart.png";
 import { axiosInstance } from "../../App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Connexion.css";
+import { useDispatch } from "react-redux";
+import { setRole, setVotant } from "../../redux/slices/userSlice";
 const Connexion = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const dispatch = useDispatch();
   useEffect(() => {
     if (window.sessionStorage.getItem("token")) {
       history.push("/dashboard");
@@ -25,8 +28,8 @@ const Connexion = () => {
           alert(resp.data.err);
         } else {
           window.sessionStorage.setItem("token", resp.data.token);
-          window.sessionStorage.setItem("role", resp.data.role);
-          window.sessionStorage.setItem("votant", resp.data.votant);
+          dispatch(setRole(resp.data.role));
+          dispatch(setVotant(resp.data.votant));
           history.push("/dashboard");
         }
       });

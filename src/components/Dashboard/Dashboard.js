@@ -5,19 +5,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { axiosInstance } from "../../App";
+import { selectVotant, setVotant } from "../../redux/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [id, setId] = useState(0);
   const [votes, setVotes] = useState([]);
   const [finished, setFinished] = useState(0);
+  const votant = useSelector(selectVotant);
+
   useEffect(() => {
     if (!window.sessionStorage.getItem("token")) {
       history.push("/");
     }
   }, []);
   useEffect(() => {
-    if (window.sessionStorage.getItem("votant") == 1) {
+    if (votant == 1) {
       var inter = setInterval(() => {
         axiosInstance
           .get("/votes/questions", {
@@ -29,7 +34,9 @@ const Dashboard = () => {
             setVotes(resp.data);
           });
       }, 1000);
-      return () => { clearInterval(inter)}
+      return () => {
+        clearInterval(inter);
+      };
     } else {
       var inte = setInterval(() => {
         axiosInstance
@@ -40,11 +47,13 @@ const Dashboard = () => {
           })
           .then((resp) => {
             if (resp.data) {
-              window.sessionStorage.setItem("votant", 1);
+              dispatch(setVotant(1));
               clearInterval(inte);
             }
           });
-          return () => { clearInterval(inte)}
+        return () => {
+          clearInterval(inte);
+        };
       }, 3000);
     }
   }, []);
@@ -55,17 +64,19 @@ const Dashboard = () => {
     <Container>
       <Row>
         {votes.map((el, key) => {
-          return (
-            <Col key={key} lg={4} md={6} sm={12}>
-              <Pole
-                title={el.ques}
-                callable={() => {
-                  setFinished(el.finished);
-                  setId(el.id);
-                }}
-              />
-            </Col>
-          );
+          if (el.visible == 1) {
+            return (
+              <Col key={key} lg={4} md={6} sm={12}>
+                <Pole
+                  title={el.ques}
+                  callable={() => {
+                    setFinished(el.finished);
+                    setId(el.id);
+                  }}
+                />
+              </Col>
+            );
+          }
         })}
       </Row>
     </Container>

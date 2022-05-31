@@ -38,11 +38,76 @@ export default function GestionVotes() {
         }
       });
   }
+  function begin(id) {
+    axiosInstance
+      .post(
+        "/votes/begin",
+        {
+          id: id,
+        },
+        {
+          headers: {
+            Authorization: window.sessionStorage.getItem("token"), //header pour gerer les permissions au backend
+          },
+        }
+      )
+      .then((resp) => {
+        if (resp.data) {
+          alert("done");
+        } else {
+          alert("Erreur");
+        }
+      });
+  }
+
+  function visible(id) {
+    axiosInstance
+      .post(
+        "/votes/visible",
+        {
+          id: id,
+        },
+        {
+          headers: {
+            Authorization: window.sessionStorage.getItem("token"), //header pour gerer les permissions au backend
+          },
+        }
+      )
+      .then((resp) => {
+        if (resp.data) {
+          alert("done");
+        } else {
+          alert("Erreur");
+        }
+      });
+  }
+
+  function hide(id) {
+    axiosInstance
+      .post(
+        "/votes/hide",
+        {
+          id: id,
+        },
+        {
+          headers: {
+            Authorization: window.sessionStorage.getItem("token"), //header pour gerer les permissions au backend
+          },
+        }
+      )
+      .then((resp) => {
+        if (resp.data) {
+          alert("done");
+        } else {
+          alert("Erreur");
+        }
+      });
+  }
   if (ajout) {
     return <AjouterVote />;
   }
   return (
-    <div className='gestion-bg'>
+    <div className="gestion-bg">
       <button
         onClick={() => {
           setAjout(true);
@@ -57,11 +122,25 @@ export default function GestionVotes() {
               <span>{el.ques}</span>
               <button
                 onClick={() => {
-                  finish(el.id);
+                  if (el.finished == 0) {
+                    finish(el.id);
+                  } else {
+                    begin(el.id);
+                  }
                 }}
-                style={{ visibility: el.finished == 0 ? "visible" : "hidden" }}
               >
-                finish
+                {el.finished == 0 ? "finish" : "begin"}
+              </button>
+              <button
+                onClick={() => {
+                  if (el.visible == 0) {
+                    visible(el.id);
+                  } else {
+                    hide(el.id);
+                  }
+                }}
+              >
+                {el.visible == 0 ? "make visible" : "hide"}
               </button>
             </div>
           );
